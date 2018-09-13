@@ -1,0 +1,13 @@
+{
+  "name": "transition-container",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "parcel demo/index.html",
+    "build": "parcel build lib/index.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
