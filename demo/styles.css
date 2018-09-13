@@ -1,0 +1,24 @@
+html * {
+	box-sizing: border-box;
+}
+
+.container {
+	margin: 100px;
+	width: 272px;
+	min-height: 600px;
+	border: 1px solid black;
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	flex-shrink: 0;
+	align-content: flex-start;
+}
+
+.item {
+	width: 80px;
+	height: 100px;
+	margin: 5px;
+	border: 1px solid #aaa;
+	background: #fefefe;
+	flex-shrink: 0;
+}

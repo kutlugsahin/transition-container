@@ -1,8 +1,15 @@
 import { OperationProducer, Animator, Operation } from "./types";
 
 export default function (operationProducer: OperationProducer, callback: Animator): OperationProducer {
-	const operations: Operation[] = [];
+	let operations: Operation[] = [];
 	let timer: number | null = null;
+
+	function onTransactionComplete() {
+		timer = null;
+		callback(operations);
+		operations = [];
+	}
+
 	return Object.keys(operationProducer)
 		.filter(p => Object.prototype.hasOwnProperty.call(operationProducer, p))
 		.reduce((result: OperationProducer, key: string) => {
@@ -10,7 +17,7 @@ export default function (operationProducer: OperationProducer, callback: Animato
 				const operation = operationProducer[key](...params);
 				if (timer === null) {
 					timer = setTimeout(() => {
-						callback(operations);	
+						onTransactionComplete();	
 					});
 				}
 				operations.push(operation);
