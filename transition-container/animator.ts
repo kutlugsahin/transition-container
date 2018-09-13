@@ -1,4 +1,4 @@
-import { Operation, Transition, TransitionMap, ElementNode, OperationType } from "./types";
+import { Operation, Transition, TransitionMap, ElementNode, OperationType, AnimationCalback } from "./types";
 import { insertChildAt, removeChildAt, values } from "./utils";
 
 const elementIdKey = "@@_transition_container";
@@ -43,7 +43,7 @@ function commitOperations(container: Element, operations: Operation[]) {
 	});
 }
 
-function applyTransitions(transitions: Transition[]) {
+function applyTransitions(transitions: Transition[], onAnimationStarted?: AnimationCalback) {
 	// requestAnimationFrame(() => {
 	transitions.forEach((transition: Transition) => {
 		const { element, oldRect, newRect } = transition;
@@ -78,14 +78,53 @@ function applyTransitions(transitions: Transition[]) {
 
 			}
 		});
+
+		if (onAnimationStarted) {
+			setTimeout(() => {
+				onAnimationStarted(transitions);
+			});
+		}
 	})
 	// });
 }
 
-export default function (container: Element, operations: Operation[]) {
+export default function (container: Element, operations: Operation[], onAnimationStarted?: AnimationCalback) {
 	const transitionMap = {};
 	recordElementFirstState(container, transitionMap);
 	commitOperations(container, operations);
 	recordElementSecondState(container, transitionMap);
-	applyTransitions(values(transitionMap));
+	applyTransitions(values(transitionMap), onAnimationStarted);
+}
+
+interface ElementRect {
+	element: Element;
+	rect: ClientRect | DOMRect;
+}
+
+function getChildrenRects(container: Element): ElementRect[] {
+	return Array.prototype.map.call(container.children, (element: Element) => {
+		return {
+			element,
+			rect: element.getBoundingClientRect()
+		};
+	});
+}
+
+function isLocationChanged(rect1: DOMRect | ClientRect, rect2: DOMRect | ClientRect) {
+	return rect1.left !== rect2.left || rect1.top !== rect2.top;
+}
+
+export function watchResize(container: Element) {
+	let prevrects: ElementRect[] | null = null;
+	function watch() {
+		requestAnimationFrame(() => {
+			const rects = getChildrenRects(container);
+			if (prevrects) {
+				
+			}
+
+			prevrects = rects;
+			watch();
+		})
+	}
 }

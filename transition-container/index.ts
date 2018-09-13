@@ -1,6 +1,15 @@
 import withTransaction from "./withTransaction";
 import animator from "./animator";
-import { Operation, OperationType } from "./types";
+import { Operation, OperationType, AnimationCalback } from "./types";
+
+const defaultOptions: ContainerOptions = {
+
+}
+
+export interface ContainerOptions {
+	onAnimationStarted?: AnimationCalback;
+	watchResize?: boolean
+}
 
 function add(element: Element, index: number): Operation {
 	return {
@@ -17,9 +26,10 @@ function remove(index: number): Operation {
 	};
 }
 
-export default function (container: Element) {
+export default function (container: Element, options?: ContainerOptions) {
+	const containerOptions = Object.assign({}, defaultOptions, options) as ContainerOptions;
 	return withTransaction({
 		add,
 		remove,
-	}, (operations) => animator(container, operations));
+	}, (operations) => animator(container, operations, containerOptions.onAnimationStarted));
 }

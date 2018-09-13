@@ -35,3 +35,5 @@ export type ElementNode = Element & {
 export type TransitionMap = {
 	[key: string]: Transition;
 }
+
+export type AnimationCalback = (operations: Transition[]) => void;

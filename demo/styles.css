@@ -3,8 +3,8 @@ html * {
 }
 
 .container {
-	margin: 100px;
-	width: 272px;
+	margin: 0 400px;
+	/* width: 272px; */
 	min-height: 600px;
 	border: 1px solid black;
 	display: flex;
