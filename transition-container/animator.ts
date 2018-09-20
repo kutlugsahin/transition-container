@@ -34,10 +34,13 @@ function recordElementSecondState(container: Element, map: TransitionMap) {
 }
 
 function commitOperations(container: Element, operations: Operation[]) {
+	console.log('operations:', operations);
 	operations.forEach(op => {
 		if (op.type === OperationType.add) {
+			console.log('adding child:', op.element!, op.index);
 			insertChildAt(container, op.element!, op.index);
 		} else {
+			console.log('removing:', op.index);
 			op.element = removeChildAt(container, op.index);
 		}
 	});
@@ -80,9 +83,9 @@ function applyTransitions(transitions: Transition[], onAnimationStarted?: Animat
 		});
 
 		if (onAnimationStarted) {
-			setTimeout(() => {
+			// setTimeout(() => {
 				onAnimationStarted(transitions);
-			});
+			// });	
 		}
 	})
 	// });
