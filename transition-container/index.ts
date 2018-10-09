@@ -1,6 +1,6 @@
 import withTransaction from "./withTransaction";
-import animator from "./animator";
 import { Operation, OperationType, AnimationCalback } from "./types";
+import operationBuffer from "./operationBuffer";
 
 const defaultOptions: ContainerOptions = {
 
@@ -28,8 +28,9 @@ function remove(index: number): Operation {
 
 export default function (container: Element, options?: ContainerOptions) {
 	const containerOptions = Object.assign({}, defaultOptions, options) as ContainerOptions;
+	const bufferOperations = operationBuffer(container, containerOptions.onAnimationStarted);
 	return withTransaction({
 		add,
 		remove,
-	}, (operations) => animator(container, operations, containerOptions.onAnimationStarted));
+	}, bufferOperations.handle);
 }

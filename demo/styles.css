@@ -3,7 +3,7 @@ html * {
 }
 
 .container {
-	margin: 0 400px;
+	margin: 0 20px;
 	/* width: 272px; */
 	min-height: 600px;
 	border: 1px solid black;
@@ -17,8 +17,19 @@ html * {
 .item {
 	width: 80px;
 	height: 100px;
-	margin: 5px;
+	/* margin: 5px; */
 	border: 1px solid #aaa;
-	background: #fefefe;
+	background-color: ghostwhite;
 	flex-shrink: 0;
+	box-shadow: 1px 1px 1px 0px #ddd;
+}
+
+.ghost {
+	width: 80px;
+	height: 100px;
+	/* margin: 5px;	 */
+	opacity: .1;
+	pointer-events: none;
+	flex-shrink: 0;
+	background-color: cadetblue;
 }
