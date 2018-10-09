@@ -15,6 +15,8 @@ function recordElementFirstState(container: Element, map: TransitionMap) {
 }
 
 function recordElementSecondState(container: Element, map: TransitionMap) {
+
+	
 	return Array.prototype
 		.filter.call(container.children, (p: Node) => p.nodeType === Node.ELEMENT_NODE)
 		.forEach((element: ElementNode, index: number) => {
@@ -30,7 +32,7 @@ function recordElementSecondState(container: Element, map: TransitionMap) {
 					newRect: element.getBoundingClientRect()
 				}
 			}
-		});
+		});	
 }
 
 function commitOperations(container: Element, operations: Operation[]) {
