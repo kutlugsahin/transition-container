@@ -15,8 +15,6 @@ function recordElementFirstState(container: Element, map: TransitionMap) {
 }
 
 function recordElementSecondState(container: Element, map: TransitionMap) {
-
-	
 	return Array.prototype
 		.filter.call(container.children, (p: Node) => p.nodeType === Node.ELEMENT_NODE)
 		.forEach((element: ElementNode, index: number) => {
@@ -24,7 +22,8 @@ function recordElementSecondState(container: Element, map: TransitionMap) {
 			element.style.transform = 'translate3d(0,0,0)';
 			const id = element[elementIdKey];
 			if (id !== undefined) {
-				map[id].newRect = element.getBoundingClientRect()
+				map[id].newRect = element.getBoundingClientRect();
+				
 				element[elementIdKey] = undefined;
 			} else {
 				map[`new_${index}`] = {
@@ -32,11 +31,12 @@ function recordElementSecondState(container: Element, map: TransitionMap) {
 					newRect: element.getBoundingClientRect()
 				}
 			}
-		});	
+		});
 }
 
 function commitOperations(container: Element, operations: Operation[]) {
 	console.log('operations:', operations);
+
 	operations.forEach(op => {
 		if (op.type === OperationType.add) {
 			console.log('adding child:', op.element!, op.index);
@@ -86,7 +86,7 @@ function applyTransitions(transitions: Transition[], onAnimationStarted?: Animat
 
 		if (onAnimationStarted) {
 			// setTimeout(() => {
-				onAnimationStarted(transitions);
+			onAnimationStarted(transitions);
 			// });	
 		}
 	})
@@ -125,7 +125,7 @@ export function watchResize(container: Element) {
 		requestAnimationFrame(() => {
 			const rects = getChildrenRects(container);
 			if (prevrects) {
-				
+
 			}
 
 			prevrects = rects;
